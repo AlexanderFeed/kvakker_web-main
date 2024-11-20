@@ -1,0 +1,12 @@
+version: '3.8'
+services:
+  client_preprod:
+    build: ../../.
+    container_name: front_preprod
+    ports:
+      - '8081:8081'
+    environment:
+      - NODE_OPTIONS=--max_old_space_size=8192 # here it is!
+    env_file: ./../../.env
+    stdin_open: true
+    tty: true

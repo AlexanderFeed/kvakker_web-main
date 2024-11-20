@@ -1,0 +1,23 @@
+stages:
+  - build
+  - deploy
+
+deploy-dev:
+  stage: deploy
+  only:
+    - dev
+  script:
+    - cp ${env_dev} .env
+    - sudo docker-compose --env-file .env --project-directory ./deploy/dev/ -p client_dev down
+    - sudo docker-compose --env-file .env --project-directory ./deploy/dev/ build client_dev
+    - sudo docker-compose --env-file .env --project-directory ./deploy/dev/ up -d
+
+deploy-preprod:
+  stage: deploy
+  only:
+    - main
+  script:
+    - cp ${env_preprod} .env
+    - sudo docker-compose --env-file .env --project-directory ./deploy/preprod/ -p client_preprod down
+    - sudo docker-compose --env-file .env --project-directory ./deploy/preprod/ build client_preprod
+    - sudo docker-compose --env-file .env --project-directory ./deploy/preprod/ up -d

@@ -1,0 +1,12 @@
+version: '3.8'
+services:
+  client_dev:
+    build: ../../.
+    container_name: front_dev
+    ports:
+      - '8080:8080'
+    environment:
+      - NODE_OPTIONS=--max_old_space_size=8192 # here it is!
+    env_file: ./../../.env
+    stdin_open: true
+    tty: true
